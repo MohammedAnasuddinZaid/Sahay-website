@@ -1,13 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { timeline } from '../data/siteContent.js';
+import { projectJourney } from '../data/siteContent.js';
 import SectionKicker from './SectionKicker.jsx';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function TimelineSection() {
-  const [active, setActive] = useState(0);
   const line = useRef(null);
 
   useEffect(() => {
@@ -35,51 +34,94 @@ export default function TimelineSection() {
     <section className="relative bg-ink py-24 sm:py-32" aria-labelledby="timeline-title">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <SectionKicker
-          eyebrow="Timeline"
-          title="A promise, stretched across two decades."
-          copy="The timeline is interactive because trust is built when growth can be traced."
+          eyebrow="Project Journey"
+          title="A 2024-start roadmap built quarter by quarter."
+          copy="Each year is broken into four quarters so the path from planning to scale stays visible and easy to scan."
         />
 
-        <div className="mt-16">
-          <div className="relative hidden lg:block">
-            <div className="absolute left-0 top-1/2 h-px w-full bg-cream/12" />
-            <div ref={line} className="absolute left-0 top-1/2 h-px w-full origin-left bg-ember" />
-            <div className="relative grid grid-cols-5 gap-5">
-              {timeline.map((item, index) => (
-                <button
-                  key={item.year}
-                  className={`timeline-node ${active === index ? 'timeline-node--active' : ''}`}
-                  onClick={() => setActive(index)}
-                  onMouseEnter={() => setActive(index)}
-                >
-                  <span>{item.year}</span>
-                </button>
-              ))}
+        <div className="mt-16 space-y-10">
+          <div className="hidden lg:block">
+            <div className="relative overflow-hidden rounded-[2rem] border border-cream/10 bg-cream/6 p-6">
+              <div className="absolute left-6 right-6 top-16 h-px bg-cream/12" aria-hidden="true" />
+              <div ref={line} className="absolute left-6 right-6 top-16 h-px origin-left bg-ember" aria-hidden="true" />
+              <div className="grid gap-8">
+                {projectJourney.map((year, yearIndex) => (
+                  <article key={year.year} className="grid gap-5 xl:grid-cols-[11rem_1fr] xl:items-start">
+                    <div className="sticky top-28">
+                      <p className="text-xs font-black uppercase tracking-[0.34em] text-gold">{year.year}</p>
+                      <h3 className="mt-3 font-display text-4xl font-bold tracking-normal text-cream">{year.theme}</h3>
+                      <div className="mt-5 rounded-full border border-cream/12 bg-cream/8 p-2">
+                        <div className="h-2 rounded-full bg-cream/10">
+                          <div className="h-full rounded-full bg-gradient-to-r from-ember via-gold to-cream" style={{ width: `${year.progress}%` }} />
+                        </div>
+                      </div>
+                      <p className="mt-3 text-sm font-semibold uppercase tracking-[0.24em] text-cream/55">{year.progress}% complete</p>
+                    </div>
+
+                    <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                      {year.quarters.map((quarter, quarterIndex) => (
+                        <article
+                          key={`${year.year}-${quarter.label}`}
+                          className="group rounded-[1.6rem] border border-cream/10 bg-ink/70 p-5 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-cream/20 hover:bg-ink"
+                        >
+                          <div className="flex items-center justify-between gap-4">
+                            <div>
+                              <p className="text-xs font-black uppercase tracking-[0.28em] text-ember">
+                                {quarter.label} <span className="text-cream/40">{quarter.span}</span>
+                              </p>
+                              <h4 className="mt-3 font-display text-2xl font-bold tracking-normal text-cream">{quarter.title}</h4>
+                            </div>
+                            <div className="grid size-12 place-items-center rounded-full border border-cream/12 bg-cream/8 text-sm font-black text-cream/80">
+                              {quarterIndex + 1}
+                            </div>
+                          </div>
+
+                          <p className="mt-4 text-sm leading-7 text-cream/66">{quarter.copy}</p>
+
+                          <div className="mt-6 flex items-center justify-between gap-3">
+                            <span className="rounded-full border border-cream/12 px-3 py-1 text-[0.68rem] font-black uppercase tracking-[0.24em] text-cream/72">
+                              {quarter.status}
+                            </span>
+                            <span className="text-xs font-semibold uppercase tracking-[0.22em] text-cream/42">
+                              {yearIndex + 1}/3
+                            </span>
+                          </div>
+                        </article>
+                      ))}
+                    </div>
+                  </article>
+                ))}
+              </div>
             </div>
           </div>
 
-          <div className="mt-12 grid gap-8 lg:grid-cols-[0.5fr_1fr] lg:items-end">
-            <div className="font-display text-[clamp(5rem,14vw,13rem)] font-bold leading-none tracking-normal text-ember">
-              {timeline[active].year}
-            </div>
-            <article className="rounded-[2rem] border border-cream/10 bg-cream/8 p-8">
-              <h3 className="font-display text-4xl font-bold tracking-normal sm:text-6xl">{timeline[active].title}</h3>
-              <p className="mt-6 max-w-2xl text-lg leading-8 text-cream/68">{timeline[active].copy}</p>
-            </article>
-          </div>
-
-          <div className="mt-10 grid gap-4 lg:hidden">
-            {timeline.map((item, index) => (
-              <button
-                key={item.year}
-                className={`rounded-2xl border p-5 text-left transition ${
-                  active === index ? 'border-ember bg-ember text-ink' : 'border-cream/12 bg-cream/6'
-                }`}
-                onClick={() => setActive(index)}
-              >
-                <span className="font-display text-3xl font-bold tracking-normal">{item.year}</span>
-                <span className="mt-2 block text-sm font-semibold">{item.title}</span>
-              </button>
+          <div className="grid gap-6 lg:hidden">
+            {projectJourney.map((year) => (
+              <article key={year.year} className="rounded-[1.8rem] border border-cream/10 bg-cream/6 p-5">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <p className="text-xs font-black uppercase tracking-[0.34em] text-gold">{year.year}</p>
+                    <h3 className="mt-2 font-display text-3xl font-bold tracking-normal text-cream">{year.theme}</h3>
+                  </div>
+                  <span className="rounded-full border border-cream/12 px-3 py-1 text-[0.68rem] font-black uppercase tracking-[0.24em] text-cream/72">
+                    {year.progress}%
+                  </span>
+                </div>
+                <div className="mt-4 h-2 rounded-full bg-cream/10">
+                  <div className="h-full rounded-full bg-gradient-to-r from-ember via-gold to-cream" style={{ width: `${year.progress}%` }} />
+                </div>
+                <div className="mt-5 grid gap-4">
+                  {year.quarters.map((quarter) => (
+                    <div key={`${year.year}-${quarter.label}`} className="rounded-[1.25rem] border border-cream/10 bg-ink/70 p-4">
+                      <p className="text-xs font-black uppercase tracking-[0.28em] text-ember">
+                        {quarter.label} <span className="text-cream/40">{quarter.span}</span>
+                      </p>
+                      <h4 className="mt-2 font-display text-2xl font-bold tracking-normal text-cream">{quarter.title}</h4>
+                      <p className="mt-3 text-sm leading-7 text-cream/66">{quarter.copy}</p>
+                    </div>
+                  ))}
+                </div>
+              </article>
             ))}
           </div>
         </div>

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Languages, Menu, Moon, X } from 'lucide-react';
+import { Languages, Menu, X } from 'lucide-react';
 import { navItems } from '../data/siteContent.js';
+import BrandLogo from './BrandLogo.jsx';
 import MagneticButton from './MagneticButton.jsx';
 
 export default function Navbar() {
@@ -44,13 +45,7 @@ export default function Navbar() {
           }`}
           aria-label="Primary navigation"
         >
-          <a href="#hero" className="group flex items-center gap-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ember">
-            <span className="grid size-11 place-items-center rounded-full bg-cream text-sm font-black text-ink">S</span>
-            <span className="leading-none">
-              <span className="block font-display text-lg font-bold tracking-normal">SAHAY</span>
-              <span className="block text-[0.62rem] font-bold uppercase tracking-[0.32em] text-fog">Foundation</span>
-            </span>
-          </a>
+          <BrandLogo compact className="focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ember" />
 
           <div className="hidden items-center gap-7 lg:flex">
             {navItems.map((item) => (
@@ -64,9 +59,6 @@ export default function Navbar() {
             <button className="icon-pill" aria-label="Switch language">
               <Languages className="size-4" />
               <span>EN</span>
-            </button>
-            <button className="icon-pill" aria-label="Toggle quiet theme">
-              <Moon className="size-4" />
             </button>
             <MagneticButton href="#donate" className="min-h-10 px-5 py-2 text-[0.68rem]">
               Donate
@@ -93,7 +85,7 @@ export default function Navbar() {
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className="flex items-center justify-between">
-              <span className="font-display text-3xl font-bold">SAHAY</span>
+              <BrandLogo compact />
               <button
                 className="grid size-12 place-items-center rounded-full border border-cream/15 bg-cream/8"
                 aria-label="Close menu"

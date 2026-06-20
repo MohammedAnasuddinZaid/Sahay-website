@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react';
-import { CheckCircle2, CreditCard, IndianRupee, Landmark, Loader2, QrCode } from 'lucide-react';
+import { CheckCircle2, IndianRupee, Loader2, QrCode } from 'lucide-react';
 import { donationPresets } from '../data/siteContent.js';
-import { openRazorpayCheckout } from '../lib/payments.js';
 import { saveDonationPledge } from '../lib/supabaseClient.js';
 import MagneticButton from './MagneticButton.jsx';
 import SectionKicker from './SectionKicker.jsx';
@@ -9,7 +8,6 @@ import SectionKicker from './SectionKicker.jsx';
 export default function DonationExperience() {
   const [selected, setSelected] = useState(1000);
   const [custom, setCustom] = useState('');
-  const [method, setMethod] = useState('upi');
   const [donor, setDonor] = useState({ name: '', email: '', phone: '' });
   const [status, setStatus] = useState('idle');
   const amount = Number(custom || selected || 0);
@@ -27,8 +25,7 @@ export default function DonationExperience() {
     if (amount < 100) return;
     setStatus('loading');
     try {
-      await saveDonationPledge({ amount, method, ...donor, impact });
-      if (method === 'card') await openRazorpayCheckout({ amount, donor });
+      await saveDonationPledge({ amount, method: 'upi', ...donor, impact });
       setStatus('success');
     } catch (error) {
       setStatus('error');
@@ -43,7 +40,7 @@ export default function DonationExperience() {
           <SectionKicker
             eyebrow="Donation experience"
             title="Make generosity feel specific."
-            copy="Preset amounts, visible impact, UPI, card readiness, Razorpay architecture, and Supabase pledge capture are built in."
+            copy="Preset amounts, visible impact, UPI flow, and Supabase pledge capture are built in."
             dark
           />
           <div className="mt-10 rounded-[2rem] bg-ink p-7 text-cream">
@@ -82,38 +79,18 @@ export default function DonationExperience() {
             />
           </label>
 
-          <div className="mt-7 grid gap-4 sm:grid-cols-2">
-            <button type="button" className={`method ${method === 'upi' ? 'method--active' : ''}`} onClick={() => setMethod('upi')}>
-              <QrCode className="size-6" />
-              <span>UPI</span>
-            </button>
-            <button type="button" className={`method ${method === 'card' ? 'method--active' : ''}`} onClick={() => setMethod('card')}>
-              <CreditCard className="size-6" />
-              <span>Card / Razorpay</span>
-            </button>
+          <div className="mt-7 rounded-[1.5rem] border border-ink/10 bg-cream p-5">
+            <p className="text-xs font-black uppercase tracking-[0.28em] text-clay">UPI ready</p>
+            <div className="mt-4 flex flex-wrap items-center gap-4">
+              <div className="grid size-24 place-items-center rounded-2xl bg-ink text-cream">
+                <QrCode className="size-12" />
+              </div>
+              <div>
+                <p className="font-bold">{import.meta.env.VITE_DONATION_UPI_ID || 'sahayfoundation@upi'}</p>
+                <p className="mt-2 text-sm leading-6 text-ink/62">Replace with verified UPI and generated QR before launch.</p>
+              </div>
+            </div>
           </div>
-
-          {method === 'upi' ? (
-            <div className="mt-5 rounded-[1.5rem] border border-ink/10 bg-cream p-5">
-              <p className="text-xs font-black uppercase tracking-[0.28em] text-clay">UPI ready</p>
-              <div className="mt-4 flex flex-wrap items-center gap-4">
-                <div className="grid size-24 place-items-center rounded-2xl bg-ink text-cream">
-                  <QrCode className="size-12" />
-                </div>
-                <div>
-                  <p className="font-bold">{import.meta.env.VITE_DONATION_UPI_ID || 'sahayfoundation@upi'}</p>
-                  <p className="mt-2 text-sm leading-6 text-ink/62">Replace with verified UPI and generated QR before launch.</p>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="mt-5 rounded-[1.5rem] border border-ink/10 bg-cream p-5">
-              <div className="flex items-center gap-3">
-                <Landmark className="size-5 text-ember" />
-                <p className="text-sm font-bold text-ink/70">Razorpay checkout opens when `VITE_RAZORPAY_KEY_ID` is configured.</p>
-              </div>
-            </div>
-          )}
 
           <div className="mt-7 grid gap-5 sm:grid-cols-3">
             <label className="field field--light">

@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 import CursorAura from './components/CursorAura.jsx';
+import BrandLogo from './components/BrandLogo.jsx';
 import Footer from './components/Footer.jsx';
 import Hero from './components/Hero.jsx';
 import MissionSection from './components/MissionSection.jsx';
@@ -16,7 +17,6 @@ const ProgramsSection = lazy(() => import('./components/ProgramsSection.jsx'));
 const TimelineSection = lazy(() => import('./components/TimelineSection.jsx'));
 const StoriesSection = lazy(() => import('./components/StoriesSection.jsx'));
 const VideoGallery = lazy(() => import('./components/VideoGallery.jsx'));
-const DonorWall = lazy(() => import('./components/DonorWall.jsx'));
 const VolunteerCTA = lazy(() => import('./components/VolunteerCTA.jsx'));
 const BlogSection = lazy(() => import('./components/BlogSection.jsx'));
 const DonationExperience = lazy(() => import('./components/DonationExperience.jsx'));
@@ -86,7 +86,6 @@ function App() {
           <TimelineSection />
           <StoriesSection />
           <VideoGallery />
-          <DonorWall />
           <VolunteerCTA />
           <BlogSection />
           <DonationExperience />
@@ -100,8 +99,11 @@ function App() {
 
 function SectionLoader() {
   return (
-    <div className="mx-auto flex min-h-72 max-w-6xl items-center justify-center px-6 text-sm uppercase tracking-[0.28em] text-fog">
-      Preparing the next chapter
+    <div className="mx-auto flex min-h-72 max-w-6xl items-center justify-center px-6">
+      <div className="flex flex-col items-center gap-5 text-center">
+        <BrandLogo showTagline align="center" compact imageClassName="h-14 sm:h-16" taglineClassName="text-fog" />
+        <p className="text-sm uppercase tracking-[0.28em] text-fog">Preparing the next chapter</p>
+      </div>
     </div>
   );
 }

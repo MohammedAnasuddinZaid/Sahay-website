@@ -114,31 +114,111 @@ export const programs = [
   },
 ];
 
-export const timeline = [
+export const projectJourney = [
   {
-    year: '2005',
-    title: 'SAHAY begins as a neighborhood promise.',
-    copy: 'A small volunteer group starts with school supplies, food support, and a belief that reliable presence can change a family trajectory.',
+    year: '2024',
+    theme: 'Foundation and clarity',
+    progress: 28,
+    quarters: [
+      {
+        label: 'Q1',
+        span: 'Jan–Mar',
+        title: 'Map the work already happening on the ground.',
+        copy: 'Audit programs, field needs, partner relationships, and existing documentation to define a reliable baseline.',
+        status: 'Baseline',
+      },
+      {
+        label: 'Q2',
+        span: 'Apr–Jun',
+        title: 'Shape the project structure and operating rhythm.',
+        copy: 'Turn scattered efforts into a clear operating model with roles, reporting loops, and a shared delivery calendar.',
+        status: 'Structure',
+      },
+      {
+        label: 'Q3',
+        span: 'Jul–Sep',
+        title: 'Launch the first visible donor and volunteer touchpoints.',
+        copy: 'Introduce a public-facing journey that explains the mission, the programs, and the proof of progress.',
+        status: 'Launch',
+      },
+      {
+        label: 'Q4',
+        span: 'Oct–Dec',
+        title: 'Measure, refine, and prepare for scale.',
+        copy: 'Collect feedback, tighten the story, and convert early engagement into a repeatable roadmap for the next year.',
+        status: 'Review',
+      },
+    ],
   },
   {
-    year: '2014',
-    title: 'Programs formalize across education and health.',
-    copy: 'Campaigns become structured initiatives with local coordinators, donor updates, and repeatable field processes.',
-  },
-  {
-    year: '2018',
-    title: 'Volunteer network scales citywide.',
-    copy: 'Students, doctors, teachers, and working professionals join field teams, making weekend service a disciplined habit.',
-  },
-  {
-    year: '2022',
-    title: 'Relief operations become data-led.',
-    copy: 'Family needs, stock, distribution, and follow-up are tracked so help reaches the right homes faster.',
+    year: '2025',
+    theme: 'Expansion and trust',
+    progress: 62,
+    quarters: [
+      {
+        label: 'Q1',
+        span: 'Jan–Mar',
+        title: 'Extend the project into more neighborhoods.',
+        copy: 'Broaden the field footprint while keeping each program tied to a consistent reporting framework.',
+        status: 'Expand',
+      },
+      {
+        label: 'Q2',
+        span: 'Apr–Jun',
+        title: 'Strengthen community partnerships and referral paths.',
+        copy: 'Build stronger links with schools, health partners, and local leaders so support reaches faster and with more context.',
+        status: 'Connect',
+      },
+      {
+        label: 'Q3',
+        span: 'Jul–Sep',
+        title: 'Make impact easier to see and understand.',
+        copy: 'Publish cleaner stories, metrics, and visual updates so supporters can follow the project without guesswork.',
+        status: 'Explain',
+      },
+      {
+        label: 'Q4',
+        span: 'Oct–Dec',
+        title: 'Convert momentum into recurring support.',
+        copy: 'Use stronger communication and pledge capture to stabilize funding and planning for the next cycle.',
+        status: 'Retain',
+      },
+    ],
   },
   {
     year: '2026',
-    title: 'A new chapter of transparent, scalable impact.',
-    copy: 'SAHAY enters its next phase with public reporting, digital donation flows, and deeper storytelling for donors and volunteers.',
+    theme: 'Scale and sustainability',
+    progress: 90,
+    quarters: [
+      {
+        label: 'Q1',
+        span: 'Jan–Mar',
+        title: 'Sharpen the roadmap around measurable outcomes.',
+        copy: 'Focus the project on outcomes that can be tracked clearly across education, health, and relief work.',
+        status: 'Focus',
+      },
+      {
+        label: 'Q2',
+        span: 'Apr–Jun',
+        title: 'Deepen the operating systems behind delivery.',
+        copy: 'Improve internal coordination, documentation, and review cycles so growth does not dilute quality.',
+        status: 'System',
+      },
+      {
+        label: 'Q3',
+        span: 'Jul–Sep',
+        title: 'Show progress through a more modern presentation layer.',
+        copy: 'Use roadmap cards, progress indicators, and clearer storytelling to make the project journey easy to scan.',
+        status: 'Present',
+      },
+      {
+        label: 'Q4',
+        span: 'Oct–Dec',
+        title: 'Close the year with a durable next-step plan.',
+        copy: 'Document learnings, set the following year’s priorities, and carry forward the most effective workstreams.',
+        status: 'Next',
+      },
+    ],
   },
 ];
 
@@ -191,21 +271,6 @@ export const gallery = [
     source: media.hero,
     copy: 'The emotional frame behind SAHAY’s education mission.',
   },
-];
-
-export const donorNames = [
-  'Aarav Mehta',
-  'Ishita Rao',
-  'Nandini Kapoor',
-  'Rohan Shah',
-  'Fatima Khan',
-  'Vivaan Iyer',
-  'Priya Menon',
-  'Karan Bansal',
-  'Sanya Thomas',
-  'Dev Arora',
-  'Corporate Partner Circle',
-  'Monthly Givers Collective',
 ];
 
 export const blogPosts = [
