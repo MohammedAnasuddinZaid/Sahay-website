@@ -21,15 +21,19 @@
     text-rendering: optimizeLegibility;
   }
 
+  @media (hover: hover) and (pointer: fine) {
+    *,
+    *::before,
+    *::after {
+      cursor: none !important;
+    }
+  }
+
   button,
   input,
   textarea,
   select {
     font: inherit;
-  }
-
-  button {
-    cursor: pointer;
   }
 
   img,
@@ -99,6 +103,20 @@
     transition: 240ms ease;
   }
 
+  .language-select {
+    width: 8.5rem;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    outline: none;
+  }
+
+  .language-select option {
+    color: #0f1c17;
+  }
+
   .icon-pill:hover,
   .icon-pill:focus-visible {
     border-color: rgb(248 244 236 / 0.45);
@@ -134,6 +152,8 @@
   }
 
   .impact-panel {
+    display: flex;
+    flex-direction: column;
     min-height: 25rem;
     border: 1px solid rgb(248 244 236 / 0.1);
     border-radius: 2rem;
@@ -144,8 +164,8 @@
 
   .program-card {
     position: relative;
-    width: min(82vw, 34rem);
-    height: min(72vh, 42rem);
+    width: 100%;
+    min-height: clamp(30rem, 48vw, 40rem);
     overflow: hidden;
     border-radius: 2rem;
     border: 1px solid rgb(15 28 23 / 0.13);
@@ -199,6 +219,8 @@
   }
 
   .story-compare {
+    display: flex;
+    flex-direction: column;
     min-height: 11rem;
     border: 1px solid rgb(248 244 236 / 0.12);
     border-radius: 1.5rem;
@@ -373,6 +395,7 @@
     background: rgb(255 255 255 / 0.62);
     color: #173328;
     font-weight: 900;
+    text-align: center;
     transition: 220ms ease;
   }
 
@@ -460,8 +483,7 @@
   }
 
   .program-card {
-    width: 86vw;
-    height: 34rem;
+    min-height: 32rem;
   }
 
   .video-card {

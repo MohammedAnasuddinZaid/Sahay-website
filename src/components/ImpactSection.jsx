@@ -1,15 +1,15 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { impactMetrics } from '../data/siteContent.js';
 import { useReducedMotion } from '../hooks/useReducedMotion.js';
 import SectionKicker from './SectionKicker.jsx';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function ImpactSection() {
+export default function ImpactSection({ content }) {
   const scope = useRef(null);
   const reducedMotion = useReducedMotion();
+  const impactMetrics = content.impact.metrics;
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -50,16 +50,16 @@ export default function ImpactSection() {
     }, scope);
 
     return () => ctx.revert();
-  }, [reducedMotion]);
+  }, [reducedMotion, impactMetrics]);
 
   return (
     <section id="impact" ref={scope} className="relative overflow-hidden bg-pine py-24 sm:py-32">
       <div className="absolute inset-0 bg-grain opacity-80" aria-hidden="true" />
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
         <SectionKicker
-          eyebrow="Measured compassion"
-          title="Impact that donors can feel and auditors can follow."
-          copy="Numbers are treated like promises: counted, explained, and connected back to human outcomes."
+          eyebrow={content.impact.eyebrow}
+          title={content.impact.title}
+          copy={content.impact.copy}
         />
 
         <div className="mt-16 grid gap-5 lg:grid-cols-4">
@@ -80,14 +80,14 @@ export default function ImpactSection() {
 
         <div className="mt-24 grid gap-8 lg:grid-cols-[0.72fr_1fr] lg:items-end">
           <div className="rounded-[2rem] border border-cream/10 bg-ink/30 p-8">
-            <p className="text-xs font-black uppercase tracking-[0.32em] text-gold">Allocation signal</p>
-            <p className="mt-5 font-display text-4xl font-bold tracking-normal">Every rupee should explain itself.</p>
+            <p className="text-xs font-black uppercase tracking-[0.32em] text-gold">{content.impact.allocation.eyebrow}</p>
+            <p className="mt-5 font-display text-4xl font-bold tracking-normal">{content.impact.allocation.title}</p>
             <p className="mt-4 text-sm leading-6 text-cream/64">
-              The donation experience is structured to connect amount, program, receipt, and reporting back to the donor journey.
+              {content.impact.allocation.copy}
             </p>
           </div>
           <div className="grid gap-4 sm:grid-cols-3">
-            {['Education 52%', 'Health 28%', 'Relief 20%'].map((item, index) => (
+            {content.impact.allocation.items.map((item, index) => (
               <div key={item} className="relative overflow-hidden rounded-[1.5rem] border border-cream/10 bg-cream/8 p-6">
                 <div
                   className="absolute bottom-0 left-0 h-1 bg-ember"

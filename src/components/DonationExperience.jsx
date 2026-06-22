@@ -1,26 +1,26 @@
 import { useMemo, useState } from 'react';
 import { CheckCircle2, CreditCard, IndianRupee, Landmark, Loader2, QrCode } from 'lucide-react';
-import { donationPresets } from '../data/siteContent.js';
 import { openRazorpayCheckout } from '../lib/payments.js';
 import { saveDonationPledge } from '../lib/supabaseClient.js';
 import MagneticButton from './MagneticButton.jsx';
 import SectionKicker from './SectionKicker.jsx';
 
-export default function DonationExperience() {
+export default function DonationExperience({ content }) {
   const [selected, setSelected] = useState(1000);
   const [custom, setCustom] = useState('');
   const [method, setMethod] = useState('upi');
   const [donor, setDonor] = useState({ name: '', email: '', phone: '' });
   const [status, setStatus] = useState('idle');
   const amount = Number(custom || selected || 0);
+  const donationPresets = content.donation.presets;
 
   const impact = useMemo(() => {
     const preset = donationPresets.find((item) => item.amount === amount);
     if (preset) return preset.impact;
-    if (amount >= 5000) return 'extends medical and family relief support';
-    if (amount >= 1000) return 'keeps a child learning with dignity';
-    return 'adds to the emergency care pool';
-  }, [amount]);
+    if (amount >= 5000) return content.donation.fallbacks[0];
+    if (amount >= 1000) return content.donation.fallbacks[1];
+    return content.donation.fallbacks[2];
+  }, [amount, content.donation.fallbacks, donationPresets]);
 
   const submit = async (event) => {
     event.preventDefault();
@@ -40,16 +40,11 @@ export default function DonationExperience() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(217,119,6,0.18),transparent_32rem)]" aria-hidden="true" />
       <div className="relative mx-auto grid max-w-7xl gap-12 px-5 sm:px-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
         <div className="lg:sticky lg:top-28">
-          <SectionKicker
-            eyebrow="Donation experience"
-            title="Make generosity feel specific."
-            copy="Preset amounts, visible impact, UPI, card readiness, Razorpay architecture, and Supabase pledge capture are built in."
-            dark
-          />
+          <SectionKicker eyebrow={content.donation.eyebrow} title={content.donation.title} copy={content.donation.copy} dark />
           <div className="mt-10 rounded-[2rem] bg-ink p-7 text-cream">
-            <p className="text-xs font-black uppercase tracking-[0.28em] text-gold">Current amount</p>
+            <p className="text-xs font-black uppercase tracking-[0.28em] text-gold">{content.donation.current}</p>
             <p className="mt-4 font-display text-7xl font-bold leading-none tracking-normal">₹{amount.toLocaleString('en-IN')}</p>
-            <p className="mt-5 text-lg leading-8 text-cream/70">This can {impact}.</p>
+            <p className="mt-5 text-lg leading-8 text-cream/70">{content.donation.thisCan} {impact}.</p>
           </div>
         </div>
 
@@ -72,14 +67,8 @@ export default function DonationExperience() {
           </div>
 
           <label className="field field--light mt-5">
-            <span>Custom amount</span>
-            <input
-              type="number"
-              min="100"
-              value={custom}
-              onChange={(event) => setCustom(event.target.value)}
-              placeholder="Enter amount in INR"
-            />
+            <span>{content.donation.custom}</span>
+            <input type="number" min="100" value={custom} onChange={(event) => setCustom(event.target.value)} placeholder={content.donation.placeholder} />
           </label>
 
           <div className="mt-7 grid gap-4 sm:grid-cols-2">
@@ -95,14 +84,14 @@ export default function DonationExperience() {
 
           {method === 'upi' ? (
             <div className="mt-5 rounded-[1.5rem] border border-ink/10 bg-cream p-5">
-              <p className="text-xs font-black uppercase tracking-[0.28em] text-clay">UPI ready</p>
+              <p className="text-xs font-black uppercase tracking-[0.28em] text-clay">{content.donation.upiReady}</p>
               <div className="mt-4 flex flex-wrap items-center gap-4">
                 <div className="grid size-24 place-items-center rounded-2xl bg-ink text-cream">
                   <QrCode className="size-12" />
                 </div>
                 <div>
                   <p className="font-bold">{import.meta.env.VITE_DONATION_UPI_ID || 'sahayfoundation@upi'}</p>
-                  <p className="mt-2 text-sm leading-6 text-ink/62">Replace with verified UPI and generated QR before launch.</p>
+                  <p className="mt-2 text-sm leading-6 text-ink/62">{content.donation.upiNote}</p>
                 </div>
               </div>
             </div>
@@ -110,22 +99,22 @@ export default function DonationExperience() {
             <div className="mt-5 rounded-[1.5rem] border border-ink/10 bg-cream p-5">
               <div className="flex items-center gap-3">
                 <Landmark className="size-5 text-ember" />
-                <p className="text-sm font-bold text-ink/70">Razorpay checkout opens when `VITE_RAZORPAY_KEY_ID` is configured.</p>
+                <p className="text-sm font-bold text-ink/70">{content.donation.cardNote}</p>
               </div>
             </div>
           )}
 
           <div className="mt-7 grid gap-5 sm:grid-cols-3">
             <label className="field field--light">
-              <span>Name</span>
+              <span>{content.volunteer.fields.name}</span>
               <input value={donor.name} onChange={(event) => setDonor((current) => ({ ...current, name: event.target.value }))} />
             </label>
             <label className="field field--light">
-              <span>Email</span>
+              <span>{content.volunteer.fields.email}</span>
               <input type="email" value={donor.email} onChange={(event) => setDonor((current) => ({ ...current, email: event.target.value }))} />
             </label>
             <label className="field field--light">
-              <span>Phone</span>
+              <span>{content.volunteer.fields.phone}</span>
               <input value={donor.phone} onChange={(event) => setDonor((current) => ({ ...current, phone: event.target.value }))} />
             </label>
           </div>
@@ -133,15 +122,15 @@ export default function DonationExperience() {
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <MagneticButton type="submit" disabled={status === 'loading' || amount < 100}>
               {status === 'loading' ? <Loader2 className="size-4 animate-spin" /> : null}
-              Continue donation
+              {content.donation.continue}
             </MagneticButton>
             {status === 'success' ? (
               <span className="inline-flex items-center gap-2 text-sm font-black text-pine">
                 <CheckCircle2 className="size-5 text-ember" />
-                Pledge captured.
+                {content.donation.success}
               </span>
             ) : null}
-            {status === 'error' ? <span className="text-sm font-bold text-rosewood">Could not save pledge. Try again.</span> : null}
+            {status === 'error' ? <span className="text-sm font-bold text-rosewood">{content.donation.error}</span> : null}
           </div>
         </form>
       </div>

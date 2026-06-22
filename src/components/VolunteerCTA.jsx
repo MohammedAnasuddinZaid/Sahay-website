@@ -14,7 +14,7 @@ const initialForm = {
   message: '',
 };
 
-export default function VolunteerCTA() {
+export default function VolunteerCTA({ content }) {
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle');
@@ -27,10 +27,10 @@ export default function VolunteerCTA() {
 
   const validate = () => {
     const next = {};
-    if (form.name.trim().length < 2) next.name = 'Please enter your full name.';
-    if (!/^\S+@\S+\.\S+$/.test(form.email)) next.email = 'Please enter a valid email.';
-    if (!/^[0-9+\-\s()]{8,}$/.test(form.phone)) next.phone = 'Please enter a reachable phone number.';
-    if (form.skills.trim().length < 3) next.skills = 'Tell us at least one skill.';
+    if (form.name.trim().length < 2) next.name = content.volunteer.errors.name;
+    if (!/^\S+@\S+\.\S+$/.test(form.email)) next.email = content.volunteer.errors.email;
+    if (!/^[0-9+\-\s()]{8,}$/.test(form.phone)) next.phone = content.volunteer.errors.phone;
+    if (form.skills.trim().length < 3) next.skills = content.volunteer.errors.skills;
     return next;
   };
 
@@ -48,7 +48,7 @@ export default function VolunteerCTA() {
       setForm(initialForm);
     } catch (error) {
       setStatus('error');
-      setErrors({ form: error.message || 'Something went wrong. Please try again.' });
+      setErrors({ form: error.message || content.volunteer.errors.form });
     }
   };
 
@@ -58,12 +58,12 @@ export default function VolunteerCTA() {
       <div className="relative mx-auto grid max-w-7xl gap-12 px-5 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
         <div className="lg:sticky lg:top-28">
           <SectionKicker
-            eyebrow="Volunteer"
-            title="Show up once. Become part of a system that keeps showing up."
-            copy="The form is connected to Supabase when environment variables are present, with EmailJS notifications ready for field coordinators."
+            eyebrow={content.volunteer.eyebrow}
+            title={content.volunteer.title}
+            copy={content.volunteer.copy}
           />
           <div className="mt-10 grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
-            {['Field visits', 'Teaching support', 'Medical camps'].map((item) => (
+            {content.volunteer.chips.map((item) => (
               <div key={item} className="rounded-2xl border border-cream/10 bg-cream/8 p-5 text-sm font-bold text-cream/80">
                 {item}
               </div>
@@ -73,23 +73,20 @@ export default function VolunteerCTA() {
 
         <form className="rounded-[2rem] border border-cream/10 bg-ink/36 p-5 shadow-soft backdrop-blur-xl sm:p-8" onSubmit={submit} noValidate>
           <div className="grid gap-5 sm:grid-cols-2">
-            <Field label="Name" name="name" value={form.name} onChange={update} error={errors.name} />
-            <Field label="Email" name="email" type="email" value={form.email} onChange={update} error={errors.email} />
-            <Field label="Phone" name="phone" value={form.phone} onChange={update} error={errors.phone} />
+            <Field label={content.volunteer.fields.name} name="name" value={form.name} onChange={update} error={errors.name} />
+            <Field label={content.volunteer.fields.email} name="email" type="email" value={form.email} onChange={update} error={errors.email} />
+            <Field label={content.volunteer.fields.phone} name="phone" value={form.phone} onChange={update} error={errors.phone} />
             <label className="field">
-              <span>Availability</span>
+              <span>{content.volunteer.fields.availability}</span>
               <select name="availability" value={form.availability} onChange={update}>
-                <option>Weekends</option>
-                <option>Weekdays</option>
-                <option>Remote</option>
-                <option>Emergency response</option>
+                {content.volunteer.options.map((option) => <option key={option}>{option}</option>)}
               </select>
             </label>
           </div>
-          <Field label="Skills" name="skills" value={form.skills} onChange={update} error={errors.skills} className="mt-5" />
+          <Field label={content.volunteer.fields.skills} name="skills" value={form.skills} onChange={update} error={errors.skills} className="mt-5" />
           <label className="field mt-5">
-            <span>Message</span>
-            <textarea name="message" value={form.message} onChange={update} rows="5" placeholder="Tell us where you want to help." />
+            <span>{content.volunteer.fields.message}</span>
+            <textarea name="message" value={form.message} onChange={update} rows="5" placeholder={content.volunteer.placeholder} />
           </label>
 
           {errors.form ? <p className="mt-4 text-sm font-semibold text-red-200">{errors.form}</p> : null}
@@ -97,12 +94,12 @@ export default function VolunteerCTA() {
           <div className="mt-7 flex flex-wrap items-center gap-4">
             <MagneticButton type="submit" disabled={status === 'loading'}>
               {status === 'loading' ? <Loader2 className="size-4 animate-spin" /> : null}
-              Send application
+              {content.volunteer.submit}
             </MagneticButton>
             {status === 'success' ? (
               <span className="inline-flex items-center gap-2 text-sm font-bold text-gold">
                 <CheckCircle2 className="size-5" />
-                Application received.
+                {content.volunteer.success}
               </span>
             ) : null}
           </div>

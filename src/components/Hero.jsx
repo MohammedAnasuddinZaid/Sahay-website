@@ -5,9 +5,7 @@ import { media } from '../data/siteContent.js';
 import AmbientScene from './AmbientScene.jsx';
 import MagneticButton from './MagneticButton.jsx';
 
-const headline = ['Not every child is born into safety.', 'But every child deserves a future.'];
-
-export default function Hero() {
+export default function Hero({ content }) {
   const section = useRef(null);
   const video = useRef(null);
   const [soundOn, setSoundOn] = useState(false);
@@ -54,11 +52,11 @@ export default function Hero() {
               transition={{ duration: 0.75, delay: 0.2 }}
             >
               <HeartHandshake className="size-4 text-ember" />
-              Dignity-led community care
+              {content.hero.kicker}
             </motion.div>
 
             <h1 className="max-w-[58rem] font-display text-[clamp(3.15rem,7.15vw,7.35rem)] font-bold leading-[0.9] tracking-normal text-cream">
-              {headline.map((line, lineIndex) => (
+              {content.hero.headline.map((line, lineIndex) => (
                 <span key={line} className="block overflow-hidden pb-3">
                   <motion.span
                     className="block"
@@ -80,16 +78,16 @@ export default function Hero() {
             transition={{ duration: 0.85, delay: 0.72 }}
           >
             <p className="text-lg leading-8 text-cream/78 sm:text-xl">
-              SAHAY Foundation turns compassion into classrooms, health access, emergency relief, and a trustworthy path for donors and volunteers to stand beside families.
+              {content.hero.copy}
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <MagneticButton href="#donate">Donate</MagneticButton>
+              <MagneticButton href="#donate">{content.buttons.donate}</MagneticButton>
               <MagneticButton href="#volunteer" variant="secondary">
-                Volunteer
+                {content.buttons.volunteer}
               </MagneticButton>
               <MagneticButton href="#video-gallery" variant="secondary" icon={false}>
                 <Play className="size-4" />
-                Watch Story
+                {content.hero.storyButton}
               </MagneticButton>
             </div>
           </motion.div>
@@ -97,13 +95,13 @@ export default function Hero() {
 
         <div className="mt-16 flex items-end justify-between gap-6">
           <div className="hidden max-w-sm border-l border-cream/20 pl-5 text-sm leading-6 text-fog sm:block">
-            Since 2005, a local promise has grown into a measurable movement for education, health, relief, and hope.
+            {content.hero.note}
           </div>
 
           <div className="flex items-center gap-4">
             <button className="icon-pill" onClick={toggleSound} aria-label={soundOn ? 'Mute hero video' : 'Play hero video sound'}>
               {soundOn ? <Volume2 className="size-4" /> : <VolumeX className="size-4" />}
-              <span>{soundOn ? 'Sound on' : 'Sound off'}</span>
+              <span>{soundOn ? content.hero.soundOn : content.hero.soundOff}</span>
             </button>
             <a href="#mission" className="scroll-cue" aria-label="Scroll to mission">
               <span />

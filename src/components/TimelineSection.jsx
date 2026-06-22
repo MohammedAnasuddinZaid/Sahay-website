@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { timeline } from '../data/siteContent.js';
 import SectionKicker from './SectionKicker.jsx';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function TimelineSection() {
+export default function TimelineSection({ content }) {
   const [active, setActive] = useState(0);
   const line = useRef(null);
+  const timeline = content.timeline.items.map(([year, title, copy]) => ({ year, title, copy }));
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -35,9 +35,9 @@ export default function TimelineSection() {
     <section className="relative bg-ink py-24 sm:py-32" aria-labelledby="timeline-title">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <SectionKicker
-          eyebrow="Timeline"
-          title="A promise, stretched across two decades."
-          copy="The timeline is interactive because trust is built when growth can be traced."
+          eyebrow={content.timeline.eyebrow}
+          title={content.timeline.title}
+          copy={content.timeline.copy}
         />
 
         <div className="mt-16">

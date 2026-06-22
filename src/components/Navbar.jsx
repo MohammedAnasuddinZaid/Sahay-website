@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Languages, Menu, Moon, X } from 'lucide-react';
-import { navItems } from '../data/siteContent.js';
+import { languages } from '../data/siteContent.js';
 import MagneticButton from './MagneticButton.jsx';
 
-export default function Navbar() {
+export default function Navbar({ content, language, setLanguage }) {
   const [hidden, setHidden] = useState(false);
   const [solid, setSolid] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -53,7 +53,7 @@ export default function Navbar() {
           </a>
 
           <div className="hidden items-center gap-7 lg:flex">
-            {navItems.map((item) => (
+            {content.navItems.map((item) => (
               <a key={item.href} href={item.href} className="nav-link text-sm font-semibold text-cream/80">
                 {item.label}
               </a>
@@ -61,15 +61,19 @@ export default function Navbar() {
           </div>
 
           <div className="hidden items-center gap-3 lg:flex">
-            <button className="icon-pill" aria-label="Switch language">
+            <label className="icon-pill" aria-label="Switch language">
               <Languages className="size-4" />
-              <span>EN</span>
-            </button>
+              <select className="language-select" value={language} onChange={(event) => setLanguage(event.target.value)}>
+                {languages.map((item) => (
+                  <option key={item.code} value={item.code}>{item.label}</option>
+                ))}
+              </select>
+            </label>
             <button className="icon-pill" aria-label="Toggle quiet theme">
               <Moon className="size-4" />
             </button>
             <MagneticButton href="#donate" className="min-h-10 px-5 py-2 text-[0.68rem]">
-              Donate
+              {content.buttons.donate}
             </MagneticButton>
           </div>
 
@@ -103,7 +107,7 @@ export default function Navbar() {
               </button>
             </div>
             <div className="mt-16 grid gap-7">
-              {navItems.map((item, index) => (
+              {content.navItems.map((item, index) => (
                 <motion.a
                   key={item.href}
                   href={item.href}
@@ -119,7 +123,7 @@ export default function Navbar() {
             </div>
             <div className="absolute bottom-8 left-6 right-6">
               <MagneticButton href="#donate" className="w-full" onClick={() => setMenuOpen(false)}>
-                Donate now
+                {content.buttons.donateNow}
               </MagneticButton>
             </div>
           </motion.div>

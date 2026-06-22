@@ -1,16 +1,17 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { documentaryChapters } from '../data/siteContent.js';
 import SectionKicker from './SectionKicker.jsx';
 
-export default function DocumentarySection() {
+export default function DocumentarySection({ content }) {
+  const documentaryChapters = content.documentary.chapters.map(([eyebrow, title, copy, media]) => ({ eyebrow, title, copy, media }));
+
   return (
     <section className="relative bg-ink py-24 sm:py-32" aria-labelledby="documentary-title">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <SectionKicker
-          eyebrow="Documentary story"
-          title="The work is quiet. The stakes are not."
-          copy="Built like a field documentary: chapter by chapter, close to the people whose lives turn because somebody showed up."
+          eyebrow={content.documentary.eyebrow}
+          title={content.documentary.title}
+          copy={content.documentary.copy}
         />
       </div>
 

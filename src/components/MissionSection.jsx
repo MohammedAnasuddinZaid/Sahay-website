@@ -1,8 +1,8 @@
-import { missionBlocks } from '../data/siteContent.js';
 import { useGsapReveal } from '../hooks/useGsapReveal.js';
 
-export default function MissionSection() {
+export default function MissionSection({ content }) {
   const scope = useGsapReveal();
+  const missionBlocks = content.mission.blocks.map(([kicker, title, copy]) => ({ kicker, title, copy }));
 
   return (
     <section id="mission" ref={scope} className="relative overflow-hidden bg-cream py-24 text-ink sm:py-32">
@@ -10,13 +10,13 @@ export default function MissionSection() {
       <div className="mx-auto grid max-w-7xl gap-14 px-5 sm:px-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
         <div className="lg:sticky lg:top-28 lg:self-start">
           <p data-local-reveal className="mb-5 text-xs font-black uppercase tracking-[0.34em] text-clay">
-            Our mission
+            {content.mission.eyebrow}
           </p>
           <blockquote data-local-reveal className="font-display text-[clamp(3.4rem,7vw,7.4rem)] font-bold leading-[0.9] tracking-normal">
-            Help should never make a person feel small.
+            {content.mission.title}
           </blockquote>
           <p data-local-reveal className="mt-8 max-w-lg text-lg leading-8 text-ink/68">
-            SAHAY exists to make support feel human, accountable, and close enough to reach before a child, parent, or elder falls through the cracks.
+            {content.mission.copy}
           </p>
         </div>
 

@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Play, X } from 'lucide-react';
-import { gallery } from '../data/siteContent.js';
 import SectionKicker from './SectionKicker.jsx';
 
-export default function VideoGallery() {
+export default function VideoGallery({ content }) {
   const [active, setActive] = useState(null);
   const modalVideo = useRef(null);
+  const gallery = content.gallery.items.map(([title, duration, source, copy]) => ({ title, duration, source, copy }));
 
   useEffect(() => {
     const onKey = (event) => {
@@ -26,14 +26,14 @@ export default function VideoGallery() {
     <section id="video-gallery" className="bg-ink py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <SectionKicker
-          eyebrow="Video gallery"
-          title="Small films for big reasons."
-          copy="Hover to preview. Open the story to watch without leaving the donation journey."
+          eyebrow={content.gallery.eyebrow}
+          title={content.gallery.title}
+          copy={content.gallery.copy}
         />
 
         <div className="mt-16 grid gap-5 lg:grid-cols-3">
           {gallery.map((item) => (
-            <button key={item.title} className="video-card group" onClick={() => setActive(item)} aria-label={`Play ${item.title}`}>
+            <button key={item.title} className="video-card group" onClick={() => setActive(item)} aria-label={`${content.gallery.play} ${item.title}`}>
               <video
                 className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105"
                 src={item.source}
@@ -72,7 +72,7 @@ export default function VideoGallery() {
             aria-modal="true"
             aria-label={active.title}
           >
-            <button className="absolute right-5 top-5 round-control" onClick={() => setActive(null)} aria-label="Close video">
+            <button className="absolute right-5 top-5 round-control" onClick={() => setActive(null)} aria-label={content.gallery.close}>
               <X className="size-5" />
             </button>
             <motion.div

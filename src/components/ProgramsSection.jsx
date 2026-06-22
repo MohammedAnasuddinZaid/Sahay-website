@@ -1,53 +1,19 @@
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { programs } from '../data/siteContent.js';
-import { useReducedMotion } from '../hooks/useReducedMotion.js';
 import MagneticButton from './MagneticButton.jsx';
 import SectionKicker from './SectionKicker.jsx';
 
-gsap.registerPlugin(ScrollTrigger);
-
-export default function ProgramsSection() {
-  const section = useRef(null);
-  const track = useRef(null);
-  const reducedMotion = useReducedMotion();
-
-  useEffect(() => {
-    if (reducedMotion || window.matchMedia('(max-width: 899px)').matches) return undefined;
-
-    const ctx = gsap.context(() => {
-      const distance = () => track.current.scrollWidth - window.innerWidth + 96;
-      gsap.to(track.current, {
-        x: () => -distance(),
-        ease: 'none',
-        scrollTrigger: {
-          trigger: section.current,
-          start: 'top top',
-          end: () => `+=${distance()}`,
-          scrub: 1,
-          pin: true,
-          invalidateOnRefresh: true,
-        },
-      });
-    }, section);
-
-    return () => ctx.revert();
-  }, [reducedMotion]);
+export default function ProgramsSection({ content }) {
+  const programs = content.programs.items.map(([title, tag, summary, stat, media]) => ({ title, tag, summary, stat, media }));
 
   return (
-    <section id="programs" ref={section} className="relative overflow-hidden bg-cream py-24 text-ink sm:py-32">
+    <section id="programs" className="relative overflow-hidden bg-cream py-24 text-ink sm:py-32">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <SectionKicker
-          eyebrow="Programs"
-          title="Four pathways, one promise: stay close."
-          copy="Each program is designed to be tactile, local, and visible to the people funding it."
+          eyebrow={content.programs.eyebrow}
+          title={content.programs.title}
+          copy={content.programs.copy}
           dark
         />
-      </div>
-
-      <div className="mt-16 overflow-x-auto px-5 pb-8 sm:px-8 lg:overflow-visible">
-        <div ref={track} className="flex w-max gap-5 lg:gap-8">
+        <div className="mt-16 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
           {programs.map((program, index) => (
             <article key={program.title} className="program-card group" tabIndex={0}>
               <video
@@ -70,7 +36,7 @@ export default function ProgramsSection() {
                 <h3 className="font-display text-4xl font-bold leading-tight tracking-normal sm:text-5xl">{program.title}</h3>
                 <p className="mt-5 max-w-md text-sm leading-6 text-cream/72">{program.summary}</p>
                 <MagneticButton href="#donate" className="mt-7 w-fit" variant="secondary">
-                  Fund this
+                  {content.buttons.fund}
                 </MagneticButton>
               </div>
             </article>

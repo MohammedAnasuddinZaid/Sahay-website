@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
@@ -8,6 +8,7 @@ import Hero from './components/Hero.jsx';
 import MissionSection from './components/MissionSection.jsx';
 import Navbar from './components/Navbar.jsx';
 import ScrollProgress from './components/ScrollProgress.jsx';
+import { getContent } from './data/siteContent.js';
 import { useReducedMotion } from './hooks/useReducedMotion.js';
 
 const DocumentarySection = lazy(() => import('./components/DocumentarySection.jsx'));
@@ -16,7 +17,6 @@ const ProgramsSection = lazy(() => import('./components/ProgramsSection.jsx'));
 const TimelineSection = lazy(() => import('./components/TimelineSection.jsx'));
 const StoriesSection = lazy(() => import('./components/StoriesSection.jsx'));
 const VideoGallery = lazy(() => import('./components/VideoGallery.jsx'));
-const DonorWall = lazy(() => import('./components/DonorWall.jsx'));
 const VolunteerCTA = lazy(() => import('./components/VolunteerCTA.jsx'));
 const BlogSection = lazy(() => import('./components/BlogSection.jsx'));
 const DonationExperience = lazy(() => import('./components/DonationExperience.jsx'));
@@ -25,6 +25,12 @@ gsap.registerPlugin(ScrollTrigger);
 
 function App() {
   const reducedMotion = useReducedMotion();
+  const [language, setLanguage] = useState('en');
+  const content = useMemo(() => getContent(language), [language]);
+
+  useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
 
   useEffect(() => {
     if (reducedMotion) return undefined;
@@ -75,24 +81,23 @@ function App() {
     <div className="relative min-h-screen overflow-x-clip bg-ink text-cream selection:bg-ember selection:text-ink">
       <CursorAura />
       <ScrollProgress />
-      <Navbar />
+      <Navbar content={content} language={language} setLanguage={setLanguage} />
       <main>
-        <Hero />
-        <MissionSection />
+        <Hero content={content} />
+        <MissionSection content={content} />
         <Suspense fallback={<SectionLoader />}>
-          <DocumentarySection />
-          <ImpactSection />
-          <ProgramsSection />
-          <TimelineSection />
-          <StoriesSection />
-          <VideoGallery />
-          <DonorWall />
-          <VolunteerCTA />
-          <BlogSection />
-          <DonationExperience />
+          <DocumentarySection content={content} />
+          <ImpactSection content={content} />
+          <ProgramsSection content={content} />
+          <TimelineSection content={content} />
+          <StoriesSection content={content} />
+          <VideoGallery content={content} />
+          <VolunteerCTA content={content} />
+          <BlogSection content={content} />
+          <DonationExperience content={content} />
         </Suspense>
       </main>
-      <Footer />
+      <Footer content={content} />
       <div className="film-grain pointer-events-none fixed inset-0 z-[70] opacity-[0.13]" aria-hidden="true" />
     </div>
   );
