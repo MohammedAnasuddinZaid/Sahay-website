@@ -69,6 +69,16 @@ export default function Hero({ content }) {
                 </span>
               ))}
             </h1>
+            <motion.div
+  initial={{ opacity: 0 }}
+  animate={{ opacity: 1 }}
+  transition={{ duration: 1, delay: 1 }}
+  className="mt-5 inline-block rounded-full border border-cream/20 px-5 py-2 bg-white/5 backdrop-blur-sm"
+>
+  <p className="text-sm md:text-base uppercase tracking-[0.25em] text-cream/90">
+    By an orphan, for an orphan.
+  </p>
+</motion.div>
           </div>
 
           <motion.div
