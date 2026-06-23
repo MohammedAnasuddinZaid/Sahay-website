@@ -20,7 +20,7 @@ const mediaSet = [media.classroom, media.hero, media.volunteer, media.classroom]
 
 const content = {
   en: {
-    nav: ['Mission', 'Impact', 'Programs', 'Stories', 'Volunteer'],
+    nav: ['Mission', 'Impact', 'Programs', 'Founder Story', 'Volunteer'],
     buttons: ['Donate', 'Donate now', 'Volunteer', 'Fund this', 'Read article'],
     hero: ['Not every child is born into amenities.', 'But every child deserves a future.', 'Dignity-led community care', 'SAHAY Foundation turns compassion into classrooms, health access, emergency relief, and a trustworthy path for donors and volunteers to stand beside families.', 'My Story', 'Since 2005, a local promise has grown into a measurable movement for education, health, relief, and hope.', 'Sound on', 'Sound off'],
     mission: ['Our mission', 'Help should never make a person feel small.', 'SAHAY exists to make support feel human, accountable, and close enough to reach before a child, parent, or elder falls through the cracks.'],
@@ -58,12 +58,117 @@ const content = {
       ['2022', 'Relief operations become data-led.', 'Family needs, stock, distribution, and follow-up are tracked so help reaches the right homes faster.'],
       ['2026', 'A new chapter of transparent, scalable impact.', 'SAHAY enters its next phase with public reporting, digital donation flows, and deeper storytelling for donors and volunteers.'],
     ],
-    stories: ['Real stories', 'Transformation is clearest when it has a name.', 'The story format is designed for verified field stories and consent-safe beneficiary storytelling.', 'Before', 'After', 'Previous story', 'Next story'],
-    storyItems: [
-      ['Anaya', '11', 'Name changed for privacy', 'Missing school during family health emergencies.', 'Back in class with mentoring, supplies, and steady attendance support.', 'I used to think school was for children with easier lives. Now I feel like it belongs to me too.', media.classroom],
-      ['Rafiq', '14', 'Composite story slot', 'Falling behind after months without guided study time.', 'Joined evening learning circles and passed his term exams with confidence.', 'A volunteer sat with me until maths stopped feeling like a wall.', media.hero],
-      ['Meera', '9', 'Consent-ready format', 'Nutrition gaps were affecting focus and school participation.', 'Family received food support and a health camp referral through SAHAY.', 'When my mother stopped worrying about dinner, I could think about tomorrow.', media.volunteer],
-    ],
+ stories: [
+'Founder Story',
+'The Journey of Hrishikesh',
+'From losing everything to building everything from scratch.',
+'Past',
+'Present',
+'Previous Story',
+'Next Story'
+],
+
+storyItems: [
+[
+'Hrishikesh',
+'01',
+'Early Life',
+'Born into a wealthy family in Goregaon, Mumbai.',
+'A life full of possibilities.',
+'His parents built a life together despite family opposition and financial struggles.',
+media.hero
+],
+
+[
+'Hrishikesh',
+'02',
+'A Mother Lost',
+'A severe asthma attack changed everything.',
+'Life would never be the same.',
+'His mother passed away while being rushed to the hospital, leaving him without a mother’s love.',
+media.classroom
+],
+
+[
+'Hrishikesh',
+'03',
+'Adoption',
+'Adopted by his aunt and uncle.',
+'Searching for stability.',
+'Soon after his adoption, another tragedy struck when his father passed away.',
+media.volunteer
+],
+
+[
+'Hrishikesh',
+'04',
+'Everything Gone',
+'A ₹60 crore empire existed.',
+'He inherited nothing.',
+'Legal complications left him without access to the wealth his father had built.',
+media.hero
+],
+
+[
+'Hrishikesh',
+'05',
+'Called Cursed',
+'More loss followed.',
+'Completely alone.',
+'His aunt and newborn cousin passed away during childbirth, and people started calling him cursed.',
+media.classroom
+],
+
+[
+'Hrishikesh',
+'06',
+'Delhi Struggles',
+'No money. No support.',
+'Only determination.',
+'He moved to Delhi, worked odd jobs, washed cars, delivered newspapers, and continued studying.',
+media.volunteer
+],
+
+[
+'Hrishikesh',
+'07',
+'A New Dream',
+'Wanted to become a doctor.',
+'Discovered technology instead.',
+'Life pushed him toward programming, where he began teaching himself to code.',
+media.hero
+],
+
+[
+'Hrishikesh',
+'08',
+'Learning To Code',
+'A ₹5,000 laptop changed everything.',
+'Hope through technology.',
+'He spent countless nights learning programming and building websites.',
+media.classroom
+],
+
+[
+'Hrishikesh',
+'09',
+'Career Growth',
+'From student to software engineer.',
+'Success through persistence.',
+'He secured professional roles, improved his skills, and achieved his dream career.',
+media.volunteer
+],
+
+[
+'Hrishikesh',
+'10',
+'Founder Today',
+'Built everything from scratch.',
+'Creating opportunities for others.',
+'Today he owns multiple companies and continues helping businesses and communities grow.',
+media.hero
+]
+],
     gallery: ['Video gallery', 'Small films for big reasons.', 'Hover to preview. Open the story to watch without leaving the donation journey.', 'Close video', 'Play'],
     galleryItems: [
       ['Inside the learning circle', '00:34', media.classroom, 'A quiet look at the rhythm of after-school support.'],
@@ -80,7 +185,7 @@ const content = {
     footer: ['A premium digital home for a foundation built on dignity, accountability, and community trust.', 'Contact', 'Trust', ['NGO registration', 'Audit report', '80G certificate', 'Privacy policy'], '\u00a9 2026 SAHAY Foundation. Built for transparent community impact.'],
   },
   hi: {
-    nav: ['मिशन', 'प्रभाव', 'कार्यक्रम', 'कहानियाँ', 'स्वयंसेवा'],
+    nav: ['मिशन', 'प्रभाव', 'कार्यक्रम', 'संस्थापक की कहानियाँ', 'स्वयंसेवा'],
     buttons: ['दान करें', 'अभी दान करें', 'स्वयंसेवा', 'इसे सहयोग दें', 'लेख पढ़ें'],
     hero: ['हर बच्चा सुविधाओं में जन्म नहीं लेता।', 'लेकिन हर बच्चा भविष्य का हकदार है।', 'गरिमा-आधारित सामुदायिक देखभाल', 'SAHAY Foundation करुणा को कक्षाओं, स्वास्थ्य सुविधा, आपात राहत, और दाताओं-स्वयंसेवकों के लिए भरोसेमंद रास्ते में बदलता है।', 'मेरी कहानी', '2005 से, एक स्थानीय वादा शिक्षा, स्वास्थ्य, राहत और आशा के लिए मापनीय आंदोलन बन गया है।', 'ध्वनि चालू', 'ध्वनि बंद'],
     mission: ['हमारा मिशन', 'मदद कभी किसी व्यक्ति को छोटा महसूस नहीं करानी चाहिए।', 'SAHAY सहायता को मानवीय, जवाबदेह और इतना निकट बनाता है कि बच्चा, माता-पिता या बुजुर्ग छूटने से पहले संभल सकें।'],
@@ -110,7 +215,7 @@ const content = {
     mission: ['ഞങ്ങളുടെ ദൗത്യം', 'സഹായം ഒരാളെയും ചെറുതായി തോന്നിക്കരുത്.', 'ഒരു കുട്ടി, രക്ഷിതാവ്, മുതിർന്നവൻ വഴുതി വീഴുന്നതിന് മുമ്പ് എത്തിച്ചേരാവുന്ന മനുഷ്യസ്നേഹമുള്ള, ഉത്തരവാദിത്തമുള്ള പിന്തുണ സൃഷ്ടിക്കുകയാണ് SAHAY.'],
   },
   mr: {
-    nav: ['ध्येय', 'प्रभाव', 'कार्यक्रम', 'कथा', 'स्वयंसेवा'],
+    nav: ['ध्येय', 'प्रभाव', 'कार्यक्रम', 'संस्थापक की कथा', 'स्वयंसेवा'],
     buttons: ['दान करा', 'आता दान करा', 'स्वयंसेवा', 'याला मदत करा', 'लेख वाचा'],
     hero: ['प्रत्येक मूल सुविधांमध्ये जन्मत नाही.', 'पण प्रत्येक मुलाला भविष्याचा हक्क आहे.', 'सन्मानाने चालणारी समुदाय काळजी', 'SAHAY Foundation करुणेला वर्गखोल्या, आरोग्य सेवा, आपत्कालीन मदत आणि दाते-स्वयंसेवकांसाठी विश्वासू मार्गात बदलते.', 'माझी कथा', '2005 पासून, एक स्थानिक वचन शिक्षण, आरोग्य, मदत आणि आशेसाठी मोजता येणारी चळवळ बनले आहे.', 'आवाज सुरू', 'आवाज बंद'],
     mission: ['आमचे ध्येय', 'मदतीमुळे कोणालाही लहान वाटू नये.', 'मूल, पालक किंवा ज्येष्ठ व्यक्ती हातातून निसटण्यापूर्वी पोहोचेल अशी मानवी, जबाबदार आणि जवळची मदत उभी करणे हे SAHAYचे काम आहे.'],
@@ -151,7 +256,10 @@ const fill = (entry, code) => {
 };
 
 const normalize = (entry) => ({
-  navItems: entry.nav.map((label, index) => ({ label, href: ['#mission', '#impact', '#programs', '#stories', '#volunteer'][index] })),
+  navItems: entry.nav.map((label, index) => ({
+  label,
+  href: ['#mission', '#impact', '#programs', '#founder-story', '#volunteer'][index]
+})),
   buttons: entry.buttons.donate ? entry.buttons : { donate: entry.buttons[0], donateNow: entry.buttons[1], volunteer: entry.buttons[2], fund: entry.buttons[3], read: entry.buttons[4] },
   hero: entry.hero.headline ? entry.hero : { headline: entry.hero.slice(0, 2), kicker: entry.hero[2], copy: entry.hero[3], storyButton: entry.hero[4], note: entry.hero[5], soundOn: entry.hero[6], soundOff: entry.hero[7] },
   mission: entry.mission.blocks ? entry.mission : { eyebrow: entry.mission[0], title: entry.mission[1], copy: entry.mission[2], blocks: entry.missionBlocks },

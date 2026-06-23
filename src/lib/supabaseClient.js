@@ -1,37 +1,86 @@
 import { createClient } from '@supabase/supabase-js';
 
+// =========================
+// ENV VARIABLES
+// =========================
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-export const supabase =
-  supabaseUrl && supabaseAnonKey ? createClient(supabaseUrl, supabaseAnonKey) : null;
-
-export async function saveVolunteerApplication(payload) {
-  if (!supabase) {
-    const existing = JSON.parse(localStorage.getItem('sahay-volunteers') || '[]');
-    localStorage.setItem(
-      'sahay-volunteers',
-      JSON.stringify([{ ...payload, created_at: new Date().toISOString(), preview: true }, ...existing]),
-    );
-    return { preview: true };
-  }
-
-  const { error } = await supabase.from('volunteer_applications').insert(payload);
-  if (error) throw error;
-  return { preview: false };
+// Safety check
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.error("❌ Missing Supabase environment variables");
+  throw new Error("Supabase environment variables are missing.");
 }
 
-export async function saveDonationPledge(payload) {
-  if (!supabase) {
-    const existing = JSON.parse(localStorage.getItem('sahay-donation-pledges') || '[]');
-    localStorage.setItem(
-      'sahay-donation-pledges',
-      JSON.stringify([{ ...payload, created_at: new Date().toISOString(), preview: true }, ...existing]),
-    );
-    return { preview: true };
+// =========================
+// SUPABASE CLIENT
+// =========================
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+/* =========================
+   DONORS TABLE
+========================= */
+
+// Save Donor
+export async function saveDonor(payload) {
+  const { data, error } = await supabase
+    .from('donors')
+    .insert([payload])
+    .select();
+
+  if (error) {
+    console.error("❌ Donor insert error:", error);
+    throw error;
   }
 
-  const { error } = await supabase.from('donation_pledges').insert(payload);
-  if (error) throw error;
-  return { preview: false };
+  return data;
+}
+
+// Get All Donors
+export async function getDonors() {
+  const { data, error } = await supabase
+    .from('donors')
+    .select('*')
+    .order('id', { ascending: false });
+
+  if (error) {
+    console.error("❌ Donor fetch error:", error);
+    return [];
+  }
+
+  return data;
+}
+
+/* =========================
+   VOLUNTEER APPLICATIONS
+========================= */
+
+// Save Volunteer
+export async function saveVolunteerApplication(payload) {
+  const { data, error } = await supabase
+    .from('volunteer_applications')
+    .insert([payload])
+    .select();
+
+  if (error) {
+    console.error("❌ Volunteer insert error:", error);
+    throw error;
+  }
+
+  return data;
+}
+
+// Get Volunteers
+export async function getVolunteerApplications() {
+  const { data, error } = await supabase
+    .from('volunteer_applications')
+    .select('*')
+    .order('id', { ascending: false });
+
+  if (error) {
+    console.error("❌ Volunteer fetch error:", error);
+    return [];
+  }
+
+  return data;
 }
