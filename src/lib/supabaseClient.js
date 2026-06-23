@@ -14,7 +14,10 @@ if (!supabaseUrl || !supabaseAnonKey) {
 // =========================
 // SUPABASE CLIENT
 // =========================
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase =
+  supabaseUrl && supabaseAnonKey
+    ? createClient(supabaseUrl, supabaseAnonKey)
+    : null;
 
 /* =========================
    DONORS TABLE
