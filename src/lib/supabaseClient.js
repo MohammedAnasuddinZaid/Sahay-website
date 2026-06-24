@@ -25,6 +25,11 @@ export const supabase =
 
 // Save Donor
 export async function saveDonor(payload) {
+  if (!supabase) {
+    console.warn('Supabase not configured - donor record skipped');
+    return null;
+  }
+
   const { data, error } = await supabase
     .from('donors')
     .insert([payload])
